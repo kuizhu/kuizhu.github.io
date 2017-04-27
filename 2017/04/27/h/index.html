@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=932" >
   <meta name="MobileOptimized" content="932" >
   <meta name="generator" content="诗酒趁年华">
-  <title>test</title>
+  <title>交叉编译环境配置</title>
 
   <link rel="stylesheet" type="text/css" href="/css/normalize.css">
   <link rel="stylesheet" type="text/css" href="/css/awe.css">
@@ -43,16 +43,14 @@
 
     <div class="post box nocover">
       <em class="date"><span>27</span>Apr</em>
-      <h2 class="post-title"><a href="/2017/04/27/h/">test</a></h2>
-      <div class="post-content"><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+      <h2 class="post-title"><a href="/2017/04/27/h/">交叉编译环境配置</a></h2>
+      <div class="post-content"><h2 id="Linux-eclipse安装交叉编译工具"><a href="#Linux-eclipse安装交叉编译工具" class="headerlink" title="Linux + eclipse安装交叉编译工具"></a>Linux + eclipse安装交叉编译工具</h2><h4 id="所需资源"><a href="#所需资源" class="headerlink" title="所需资源"></a>所需资源</h4><p><a href="https://www.github.com/raspberrypi/tools" target="_blank" rel="external">tools</a><br><a href="http://www.eclipse.org/downloads/packages/eclipse-ide-cc-developers/junor" target="_blank" rel="external">eclipse</a></p>
+<h4 id="安装ia32-libs"><a href="#安装ia32-libs" class="headerlink" title="安装ia32-libs"></a>安装ia32-libs</h4><p>  由于ubutnu 13.04之后已经没有了ia32-libs这个东西，所以在执行sudo apt-get install ia32-libs 会找不到对应的包，网上有人说手动添加源可以下载安装，你们可以试试，但我没有成功,<a href="http://blog.csdn.net/maojun1986/article/details/38670047" target="_blank" rel="external">查看细节</a><br>本文采用如下方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ dpkg-query -S libgtk-x11-2.0.so.0   （查寻64位库）</div><div class="line">$ sudo apt-get install libgtk2.0-0:i386 （安装对应的32位库）</div></pre></td></tr></table></figure></p>
+<p><img src="http://s6.sinaimg.cn/large/006JjkWZzy79oIRoCvbb5&amp;690" alt="Alt Text"></p>
+<h4 id="将tools-相关文件的路径添加到-HOME-bashrc文件中"><a href="#将tools-相关文件的路径添加到-HOME-bashrc文件中" class="headerlink" title="将tools 相关文件的路径添加到$HOME/.bashrc文件中"></a>将tools 相关文件的路径添加到$HOME/.bashrc文件中</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HOME</span>/rpi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin</div><div class="line">$ <span class="built_in">source</span> .bashrc</div></pre></td></tr></table></figure>
+<p>验证是否成功：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ arm-linux-gnueabihf-gcc –v</div></pre></td></tr></table></figure></p>
+<p><img src="http://s1.sinaimg.cn/large/006JjkWZzy79oIRJwIM40&amp;690" alt="Alt Text"></p>
+<h4 id="在eclipse中加入交叉编译源"><a href="#在eclipse中加入交叉编译源" class="headerlink" title="在eclipse中加入交叉编译源"></a>在eclipse中加入交叉编译源</h4><p>File-&gt;New-&gt;c++ project<br>填写工程名  选择Executable-&gt;Empty Project<br>在toolchains 下面选择 Cross GCC<br>Next<br>填写编译前缀<br>填写路径<br>Finish<br><img src="http://s10.sinaimg.cn/large/006JjkWZzy79oIY2i4V29&amp;690" alt="Alt Text"><br>编写程序-&gt;Build project<br>在Debug文件夹中找到二进制文件，就可以放在树莓派上运行了</p>
 </div>
 
       <div class="bottom-panel">
@@ -84,8 +82,9 @@
     
     <li>
       <div class="text-holder">
-        <h3 class="link-title"><a href="/2017/04/27/h/">test</a></h3>
-        <p>Welcome to Hexo! This is your very first post. Che</p>
+        <h3 class="link-title"><a href="/2017/04/27/h/">交叉编译环境配置</a></h3>
+        <p>Linux + eclipse安装交叉编译工具所需资源toolseclipse
+安装ia32-lib</p>
       </div>
     </li>
   
